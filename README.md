@@ -1,98 +1,134 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Airbnb-like Booking Platform Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A backend system for an Airbnb-like booking platform built with [NestJS](https://nestjs.com/) and [Prisma](https://www.prisma.io/). This project provides a robust API with features including user authentication, room booking, conflict checking, user history, admin dashboard, image upload, and booking statistics.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- **User Authentication**: Secure registration and login system, with Google OAuth support.
+- **Room Booking**: Create, update, and cancel room bookings.
+- **Conflict Checking**: Ensures no overlapping bookings for the same room.
+- **User History**: Tracks user booking history.
+- **Admin Dashboard**: Manages users, bookings, and system settings.
+- **Image Upload**: Integrates with Cloudinary for managing and uploading room listing images.
+- **Booking Statistics**: Provides analytics and insights for bookings.
+- **Email Notifications**: Supports sending email notifications (e.g., booking confirmations).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Prerequisites
 
-## Project setup
+Before running the project, ensure you have the following installed:
 
-```bash
-$ npm install
-```
+- **Node.js** (version 16 or higher)
+- **npm** (version 8 or higher)
+- **MySQL** (version 8 or higher, as the project uses MySQL)
+- **Git** (to clone the repository)
 
-## Compile and run the project
+## Getting Started
+
+Follow these steps to set up and run the project locally.
+
+### 1. Clone the Repository
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone https://github.com/nguyenvuongviet/api-airbnb-nest.git
+cd api-airbnb-nest
 ```
 
-## Run tests
+### 2. Install Dependencies
+
+Install the required npm packages:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
+### 3. Configure Environment Variables
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Create a `.env` file in the root directory and configure the environment variables based on the template below:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```env
+PORT=3069
+DATABASE_URL="mysql://<username>:<password>@<host>:<port>/<database_name>"
+ACCESS_TOKEN_SECRET="<access_token_secret>"
+ACCESS_TOKEN_EXPIRES="1d"
+REFRESH_TOKEN_SECRET="<refresh_token_secret>"
+REFRESH_TOKEN_EXPIRES="7d"
+SENDER_EMAIL="<sender_email_address>"
+SENDER_PASSWORD="<email_app_password>"
+GOOGLE_CLIENT_ID="<google_client_id>"
+GOOGLE_CLIENT_SECRET="<google_client_secret>"
+CLOUDINARY_NAME="<cloudinary_account_name>"
+CLOUDINARY_API_KEY="<cloudinary_api_key>"
+CLOUDINARY_API_SECRET="<cloudinary_api_secret>"
+```
+
+**Explanation of Environment Variables**:
+- `PORT`: The port the API will run on (default is 3069).
+- `DATABASE_URL`: Connection string for the MySQL database. Replace:
+  - `<username>`: MySQL username (e.g., `root`).
+  - `<password>`: MySQL password.
+  - `<host>`: MySQL server address (e.g., `localhost`).
+  - `<port>`: MySQL port (e.g., `3307`).
+  - `<database_name>`: Database name (e.g., `db_airbnb`).
+- `ACCESS_TOKEN_SECRET` and `REFRESH_TOKEN_SECRET`: Secret keys for JSON Web Tokens (JWT). Generate secure random strings using a command like `openssl rand -base64 32`.
+- `ACCESS_TOKEN_EXPIRES` and `REFRESH_TOKEN_EXPIRES`: Token expiration times (1 day for access token, 7 days for refresh token).
+- `SENDER_EMAIL`: Email address used for sending notifications (e.g., Gmail).
+- `SENDER_PASSWORD`: App Password for the email service.
+- `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`: Credentials from Google Cloud Console for Google OAuth login.
+- `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`: Credentials from Cloudinary for image management.
+
+### 4. Set Up the Database
+
+Ensure MySQL is running on the host and port specified in `DATABASE_URL` (default: `localhost:3307`). Create the database if it does not exist:
+
+```sql
+CREATE DATABASE db_airbnb;
+```
+
+Run the following command to set up the database schema using Prisma:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npx prisma db pull
+npx prisma generate
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+This command will create the database tables based on the Prisma schema.
 
-## Resources
+### 5. Compile and Run the Project
 
-Check out a few resources that may come in handy when working with NestJS:
+You can run the project in different modes:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- **Development Mode**:
+  ```bash
+  npm run start
+  ```
 
-## Support
+- **Watch Mode** (automatically restarts on code changes):
+  ```bash
+  npm run start:dev
+  ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Production Mode**:
+  ```bash
+  npm run start:prod
+  ```
 
-## Stay in touch
+The API will be available at `http://localhost:3069`.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 6. Using Swagger for API Documentation
 
-## License
+The project integrates Swagger (OpenAPI) to provide an interactive API documentation interface. To access the API documentation:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+1. Ensure the server is running (using `npm run start` or `npm run start:dev`).
+2. Open a browser and navigate to:
+   ```
+   http://localhost:3069/api-docs
+   ```
+3. The Swagger interface will display a list of all API endpoints, including:
+   - (./assets/api_1.png)
+   - (./assets/api_2.png)
+   - (./assets/api_3.png)
+   - (./assets/api_4.png)
+
+**Notes**:
+- Some endpoints (e.g., `/admin/dashboard` or `/rooms`) require authentication. Use the `/auth/login` or `/auth/google` endpoint to obtain an access token, then add the token to the `Authorization` header in the format `Bearer <access_token>` in the Swagger interface.
+- To upload images via the `/upload` endpoint, use Swagger's file upload feature and ensure the Cloudinary variables are correctly configured in the `.env` file.
