@@ -4,14 +4,14 @@ A backend system for an Airbnb-like booking platform built with [NestJS](https:/
 
 ## Features
 
-- **User Authentication**: Secure registration and login system, with Google OAuth support.
-- **Room Booking**: Create, update, and cancel room bookings.
-- **Conflict Checking**: Ensures no overlapping bookings for the same room.
-- **User History**: Tracks user booking history.
-- **Admin Dashboard**: Manages users, bookings, and system settings.
-- **Image Upload**: Integrates with Cloudinary for managing and uploading room listing images.
-- **Booking Statistics**: Provides analytics and insights for bookings.
-- **Email Notifications**: Supports sending email notifications (e.g., booking confirmations).
+- **User Authentication**
+- **Room Booking**
+- **Conflict Checking**
+- **User History**
+- **Admin Dashboard**
+- **Image Upload**
+- **Booking Statistics**
+- **Email Notifications**
 
 ## Prerequisites
 
@@ -62,6 +62,7 @@ CLOUDINARY_API_SECRET="<cloudinary_api_secret>"
 ```
 
 **Explanation of Environment Variables**:
+
 - `PORT`: The port the API will run on (default is 3069).
 - `DATABASE_URL`: Connection string for the MySQL database. Replace:
   - `<username>`: MySQL username (e.g., `root`).
@@ -98,11 +99,13 @@ This command will create the database tables based on the Prisma schema.
 You can run the project in different modes:
 
 - **Development Mode**:
+
   ```bash
   npm run start
   ```
 
 - **Watch Mode** (automatically restarts on code changes):
+
   ```bash
   npm run start:dev
   ```
@@ -124,11 +127,12 @@ The project integrates Swagger (OpenAPI) to provide an interactive API documenta
    http://localhost:3069/api-docs
    ```
 3. The Swagger interface will display a list of all API endpoints, including:
-   - (./assets/api_1.png)
-   - (./assets/api_2.png)
-   - (./assets/api_3.png)
-   - (./assets/api_4.png)
+   ![Swagger Endpoints](./assets/api_1.png)
+   ![Swagger Endpoints](./assets/api_2.png)
+   ![Swagger Endpoints](./assets/api_3.png)
+   ![Swagger Endpoints](./assets/api_4.png)
 
 **Notes**:
+
 - Some endpoints (e.g., `/admin/dashboard` or `/rooms`) require authentication. Use the `/auth/login` or `/auth/google` endpoint to obtain an access token, then add the token to the `Authorization` header in the format `Bearer <access_token>` in the Swagger interface.
 - To upload images via the `/upload` endpoint, use Swagger's file upload feature and ensure the Cloudinary variables are correctly configured in the `.env` file.
